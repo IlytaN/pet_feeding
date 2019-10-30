@@ -9,7 +9,7 @@ import Col from 'react-bootstrap/Col';
 import Button from 'react-bootstrap/Button';
 import Image from 'react-bootstrap/Image';
 import Modal from 'react-bootstrap/Modal';
-import Form from 'react-bootstrap/Form';
+import DateTimePicker from 'react-datetime-picker';
 
 class App extends React.Component {
   constructor () {
@@ -17,7 +17,8 @@ class App extends React.Component {
     this.state = {
       feedback: '',
       isShowingFeed: false,
-      isShowingSchedule: false
+      isShowingSchedule: false,
+      date: new Date()
     };
     this.handleShowFeed = this.handleShowFeed.bind(this);
     this.handleCloseFeed = this.handleCloseFeed.bind(this);
@@ -45,6 +46,19 @@ class App extends React.Component {
       this.setState({
           isShowingSchedule: false
       });
+  }
+
+  changeDate = date => {
+    this.setState({ date });
+  }
+
+  setSchedule = () => {
+    axios.post('http://192.168.1.110/schedule', {time : this.state.date}).then(
+      response => {
+        this.handleCloseSchedule();
+        this.setState({feedback: response.data, isShowingFeed: true})
+      }
+    );
   }
 
   render() {
@@ -85,13 +99,18 @@ class App extends React.Component {
           <Modal.Header closeButton>
             <Modal.Title>Schedule next feed</Modal.Title>
           </Modal.Header>
-          <Modal.Body>Choose a time</Modal.Body>
+          <Modal.Body>
+            <DateTimePicker
+              onChange={this.changeDate}
+              value={this.state.date}
+            />
+          </Modal.Body>
           <Modal.Footer>
             <Button variant="secondary" onClick={this.handleCloseSchedule}>
               Close
             </Button>
-            <Button variant="primary" onClick={this.handleCloseSchedule}>
-              Save Changes
+            <Button variant="primary" onClick={this.setSchedule}>
+              Save
             </Button>
           </Modal.Footer>
         </Modal>
