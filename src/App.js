@@ -83,6 +83,7 @@ class App extends React.Component {
           </Button>
         </Row>
 
+        {/* Show success action */}
         <Modal show={this.state.isShowingFeed} onHide={this.handleCloseFeed}>
           <Modal.Header closeButton>
             <Modal.Title>Congratulations!</Modal.Title>
@@ -95,6 +96,7 @@ class App extends React.Component {
           </Modal.Footer>
         </Modal>
 
+        {/* Show time picker */}
         <Modal show={this.state.isShowingSchedule} onHide={this.handleCloseSchedule}>
           <Modal.Header closeButton>
             <Modal.Title>Schedule next feed</Modal.Title>
