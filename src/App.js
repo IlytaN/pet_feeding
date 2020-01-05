@@ -23,8 +23,9 @@ class App extends React.Component {
     this.handleShowFeed = this.handleShowFeed.bind(this);
     this.handleCloseFeed = this.handleCloseFeed.bind(this);
     this.handleShowSchedule = this.handleShowSchedule.bind(this);
+    this.handleCloseSchedule = this.handleCloseSchedule.bind(this);
   };
-
+  
   handleShowFeed = () => {
       axios.get('http://192.168.1.110/feed')
       .then(response => this.setState({feedback: response.data, isShowingFeed: true}));
